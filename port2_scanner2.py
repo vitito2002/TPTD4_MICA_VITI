@@ -70,14 +70,14 @@ def scan_ports(target_ip, option):
         total_ports += 1
         packet = IP(dst=target_ip) / TCP(dport=port, flags="S")
         # Enviar el paquete y recibir la respuesta
-        response = sr1(packet, timeout=0.01, verbose=0)
+        response = sr1(packet, timeout=0.3, verbose=0)
 
         if response and response.haslayer(TCP) and response.getlayer(TCP).flags == 0x12:
             if option == "-f":
                 # Crear un paquete con el tercer mensaje del handshake (con payload)
                 ack_packet = IP(dst=target_ip) / TCP(dport=port, sport=response[TCP].dport, flags="A") / "GET / HTTP/1.1\r\nHost: www.google.com\r\n\r\n"
                 # Enviar el paquete de ACK con payload
-                response = sr1(ack_packet, timeout=0.01, verbose=0)
+                response = sr1(ack_packet, timeout=0.3, verbose=0)
                 if response and response.haslayer(TCP) and response.getlayer(TCP).flags == 0x18:
                     # Si recibimos un ACK en respuesta, el puerto está abierto.
                     open_ports += 1
