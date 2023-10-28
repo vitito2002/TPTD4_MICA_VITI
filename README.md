@@ -65,7 +65,8 @@ Para el primer experimento elegimos 6 universidades de distintos continentes y s
 - Universidad de Sorbonne (Europa) - http://www.sorbonne-universite.fr/
 - Universidad de San Pablo (America del Sur) - http://www5.usp.br/
 - Universidad Torcuato di Tella (America del Sur) - http://www.utdt.edu/
-  Para cada de esta ejecutamos el traceroute con sus respectivas URLs, implementamos en la funcion un codigo que nos de la cantidad de saltos exitosos donde recibimos una respuesta positiva, tambien contamos la cantidad de saltos en la que no recibimos respuesta, como tambien los saltos totales que tuvo que hacer el paquete. Es decir que para calcular el porcentaje ttl-zero-during-transit, dividimos la cantidad total de saltos exitosos por la cantidad de saltos totales:
+  
+- Para cada de esta ejecutamos el traceroute con sus respectivas URLs, implementamos en la funcion un codigo que nos de la cantidad de saltos exitosos donde recibimos una respuesta positiva, tambien contamos la cantidad de saltos en la que no recibimos respuesta, como tambien los saltos totales que tuvo que hacer el paquete. Es decir que para calcular el porcentaje ttl-zero-during-transit, dividimos la cantidad total de saltos exitosos por la cantidad de saltos totales:
 
 $$
 \% \; ttl-zero-during-transit \; = \frac{\#casos \; exitosos}{\# casos \; totales}
