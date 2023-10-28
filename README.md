@@ -68,13 +68,13 @@ Para el primer experimento elegimos 6 universidades de distintos continentes y s
   Para cada de esta ejecutamos el traceroute con sus respectivas URLs, implementamos en la funcion un codigo que nos de la cantidad de saltos exitosos donde recibimos una respuesta positiva, tambien contamos la cantidad de saltos en la que no recibimos respuesta, como tambien los saltos totales que tuvo que hacer el paquete. Es decir que para calcular el porcentaje ttl-zero-during-transit, dividimos la cantidad total de saltos exitosos por la cantidad de saltos totales:
 
 $$
-% ttl-zero-during-transit = \frac{#casos exitosos}{# casos totales}
+\% \; ttl-zero-during-transit \; = \frac{\#casos \; exitosos}{\# casos \; totales}
 $$
 
 Por el otro lado, para calcular el porcentaje de hosts intermedios que devolvieron una respuesta negativa, dividimos la cantidad total de saltos no exitosos por la cantidad de saltos totales:
 
 $$
-de no respuesta = \frac{#casos no exitosos}{# casos totales}
+\% \; de \; no \; respuesta = \frac{\#casos \; no \; exitosos}{\# casos \; totales}
 $$
 
 A continuacion, proporcionaremos los resultados que obtuvimos corriendo el codigo desde la universidad con el Wi-Fi de ALUMNOSUTDT:
