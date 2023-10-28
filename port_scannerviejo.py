@@ -41,7 +41,7 @@ def connect_scan(target_ip, timeout):
             # Enviar el paquete de ACK con payload
             response = sr1(ack_packet, timeout=timeout, verbose=0)
             if response and response.haslayer(TCP) and response.getlayer(TCP).flags == 0x10:
-                # Si recibimos un ACK en respuesta, el puerto está abierto.
+                # Si recibimos un ACK en respuesta, el puerto estÃ¡ abierto.
                 open_ports += 1
                 port_status[port] = "open"
                 print(f"Port {port} is open (Connect scan)")
@@ -98,3 +98,4 @@ if __name__ == "__main__":
 
     scan_ports(target_ip, option, 0.5)
 
+... (1 line left)

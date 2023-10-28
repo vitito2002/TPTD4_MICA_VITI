@@ -88,7 +88,7 @@ Para el traceroute de la universidad de EEUU, el salto mas significativo, es dec
 
 Para el traceroute de la Universidad China de Hong Kong, el salto mas significativo, es decir el que tardo mas comparado con el anterior, tiene una IP de un servidor privado, Las redes privadas a menudo implementan políticas de tráfico y filtrado de paquetes. Esto puede causar retrasos en la transmisión de datos y, en consecuencia, un aumento en el RTT.
 
-Para el traceroute de la Africana de Ciencia y Tecnologia ,el salto mas significativo, es decir el que tardo mas comparado con el anterior, tiene una IP de un servidor de Reino Unido, el anterior es de Argentina,los paquetes deben atravesar conexiones internacionales y pasar por infraestructuras de enrutamiento específicas que a menudo implican procedimientos de seguridad y verificación adicionales. Estos procesos pueden agregar tiempo al RTT.
+Para el traceroute de la Africana de Ciencia y Tecnologia ,el salto mas significativo, es decir el que tardo mas comparado con el anterior, tiene una IP de un servidor de Reino Unido, el anterior es de Argentina,los paquetes deben atravesar conexiones internacionales y pasar por infraestructuras de enrutamiento específicas que a veces implican procedimientos de seguridad y verificación adicionales. Estos procesos pueden agregar tiempo al RTT.
 
 Para el traceroute de la Universidad de Sorbonne, el salto mas significativo, es decir el que tardo mas comparado con el anterior, tiene una IP de un servidor privado, Las redes privadas a menudo implementan políticas de tráfico y filtrado de paquetes. Esto puede causar retrasos en la transmisión de datos y, en consecuencia, un aumento en el RTT.
 
