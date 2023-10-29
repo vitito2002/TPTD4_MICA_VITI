@@ -1,10 +1,21 @@
+---
+title: "Informe"
+author: "Victor Navajas, Micaela Oliva y Exequiel Muñoz"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
 # Informe de Tecnología Digital 4
 
 ## Información General
 
 - **Curso:** Tecnología Digital 4
 - **Fecha:** [29 de octubre de 2023]
-- **Profesor:** [Emmanuel Iarussi y Lucio Emilio Santi]
+- **Profesores:** [Emmanuel Iarussi y Lucio Emilio Santi]
 - **Estudiantes:** [Victor Navajas, Micaela Oliva y Exequiel Munoz]
 
 ## Resumen
