@@ -77,30 +77,44 @@ Para el primer experimento elegimos 6 universidades de distintos continentes y s
 - Universidad de San Pablo (America del Sur) - http://www5.usp.br/ (USP)
 - Universidad Torcuato di Tella (America del Sur) - http://www.utdt.edu/ (UTDT)
 
-  Para cada de esta ejecutamos el traceroute con sus respectivas URLs, implementamos en la funcion un codigo que nos de la cantidad de saltos exitosos donde recibimos una respuesta positiva, tambien contamos la cantidad de saltos en la que no recibimos respuesta, como tambien los saltos totales que tuvo que hacer el paquete. Es decir que para calcular el porcentaje ttl-zero-during-transit, dividimos la cantidad total de saltos exitosos por la cantidad de saltos totales:
+Para cada una de las universidades elegidas ejecutamos el traceroute con sus respectivas URLs, implementando el codigo de ```traceroute``` tal que nos muestra el camino hecho del paquete por cada router hasta llegar a su destino y que nos devuelva el porcentaje de paquetes con ```ttl-zero-during-transit```, el porcentaje de paquetes de ```no-response``` y si el paquete termina llegando a su destino o no con ```destination-reached```.
+
+Implementamos a ```ttl-zero-during-transit``` que a partir de un contador que cuenta la cantidad de saltos de las cuales recibimos respuesta exitosa de un router intermedio, a ese valor del contador lo dividimos por la cantidad de hops totales que terminó haciendo ese paquete, en el caso de que haya llegado a su destino podría llegar a ser menor que los 45 hops que habíamos puesto como el máximo, en el otro caso, si no llegaba al destino contaría los 45 hops. Por lo cuál, para calcular el porcentaje de ```ttl-zero-during-transit```:
 
 $$
-\% \; ttl-zero-during-transit \; = \frac{\#casos \; exitosos}{\# casos \; totales}
+\% \; ttl-zero-during-transit \; = \frac{\# casos \; exitosos \; de \; los routers intermedios}{\# hops \; totales \; del \; paquete}
 $$
 
-$$
-
-
-$$
-
-Por el otro lado, para calcular el porcentaje de hosts intermedios que devolvieron una respuesta negativa, dividimos la cantidad total de saltos no exitosos por la cantidad de saltos totales:
+Por el otro lado, para calcular el porcentaje de hosts intermedios que devolvieron una respuesta negativa para paquetes de ```no-response``` o no respuesta, es decir, de la cuál no obtuvimos una respuesta del router, sea porque se haya perdido algun paquete o que el router haya decidido de no responder, también inicializamos otro contador que cuente esos casos y lo dividimos por la canntidad total de hops que terminó haciendo el paquete:
 
 $$
-\% \; de \; no \; respuesta = \frac{\#casos \; no \; exitosos}{\# casos \; totales}
+\% \; de \; no \; respuesta = \frac{\#casos \; no \; exitosos}{\# hops \; totales \; del \; paquete}
 $$
 
+Adicionalmente, si ```destination-reached``` vale 0 el paquete no terminó llegando al host destino, en cambio si vale 1 es que sí llegó al destino. 
+
+Por lo cual, nos pareció interesante arrancar el experimento corriendo la implementación de ```traceroute``` desde la misma computadora en dos lugares distintos para ver los resultados que podría arrojar, y en qué se podrían diferenciar. Es por eso, que decidimos correrlo desde la universidad con el WiFi de ALUMNOSUTDT, que nos proporcionó estos resultados para cada una de las cinco universidades elegidas:
+
+![5 universidades](5universidades.png) *Figura 1: Resultados de traceroute corrido desde la universidad*
+
+Pudimos observar que corriendo desde la universidad, la tasa de excito era bastante alta, pues de las 6 universidades, los paquetes de 5 de ellas pudieron llegar al host destino, que es un 83,3% de éxito. El único paquete que no llegó a su destino fue el de www.utdt.edu, ya que en todos los 45 hops obtuvimos de respuesta '*', es decir, que tuvo un 100% de no respuesta. Eso podría significar que los routers sobre el path no responden al paquete ICMP o también supusimos que la universidad tiene configurada la firewall para no mostrar esa información en particular por medidas de seguridad, ya que es una página web muy frecuentado por toda la comunidad de UTDT.
+
+Asimismo, observamos que gaia.cs.umass.edu por mas que obtuvo la mayor cantidad de hops que necesito para que llegue al destino, es el host que tuvo el mayor porcentaje de ttl-zero-during-transit con un 90%, mientras que el resto llegaron también a su destino pero cerca de un 70%.
+
+Por el otro lado, lo corrimos también desde la casa de Micaela para ver que resultados nos podría arrojar:
+
+![5 universidades Micaela](5universidades_mica.png) *Figura 2: Resultados de traceroute corrido desde la casa de Micaela*
+
+En la *Figura 2* podemos ver que los resultados son bastante distintos a los de la *Figura 1*. Una de las razones, es que ninguno de los paquetes llegó a su host destino, tal que hubo 0% de éxito. Aunque, mirando un poco más el path que hace cada uno de los paquetes, vimos que los paquetes en un cierto punto muestran los routers que atravesaron, pero después solamente aparecen los "*". Lo que nos lleva a especular, que los host intermedios y de destino no se quieren comunicar con el host de Micaela por correrlo desde un WiFi personal, en comparación con uno institucional, ya que por ahí no lo ven como un host de origen confiable. 
+
+Asimismo, decidimos comparar ambos casos con el tracert de Windows para ver que resultados arroja. Para esto mostraremos que sucedió con las páginas de GAIA y UTDT:
+
+![traceroute desde campus de GAIA](traceroute_univ_gaia.png) *Figura 3: Resultados de traceroute y de tracert de GAIA corrido desde la universidad*
+
+El tracert de Windows utiliza un TTL máximo de tamaño 30, por lo cual al llegar a 30 termina el trace. Sin emmbargo, los caminos que hace son idénticos, con la única excepción que el tracert además muestra los nombres de los routers, como por ejemplo el de ae25.baires1.bai.seabone.net
 
 
-A continuacion, proporcionaremos los resultados que obtuvimos corriendo traceroute desde el WiFi de la universidad:
 
-![5 universidades](5universidades.png)
-
-Pudimos observar que www.utdt.edu es un caso particular, ya que en todos los 45 hops solamente mostro '*', es decir, que tuvo un 100% de no respuesta. Asimismo, gaia.cs.umass.edu por mas que obtuvo la mayor cantidad de hops que necesito para que llegue al destino, igualmente es el host que tuvo el mayor porcentaje de ttl-zero-during-transit con 90%, mientras que el resto llegaron también a su destino pero cerca de un 70%.
 
 #### b
 

@@ -1,0 +1,3 @@
+Por lo que observamos, esto puede suceder
+
+implementamos en la función un código que nos de la cantidad de saltos exitosos donde recibimos una respuesta positiva, tambien contamos la cantidad de saltos en la que no recibimos respuesta, como tambien los saltos totales que tuvo que hacer el paquete. Es decir que para calcular el porcentaje ttl-zero-during-transit, dividimos la cantidad total de saltos exitosos por la cantidad de saltos totales:
