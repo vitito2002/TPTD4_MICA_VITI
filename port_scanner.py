@@ -37,7 +37,7 @@ def connect_scan(target_ip, timeout):
         if response and response.haslayer(TCP) and response.getlayer(TCP).flags == 0x12:
             # try:
             # Crear un paquete con el tercer mensaje del handshake (con payload)
-            ack_packet = IP(dst=target_ip) / TCP(dport=port, sport=packet[TCP].sport, ack=response[TCP].seq + 1, seq=packet[TCP].seq+1, flags="A") / f"GET / HTTP/1.1\r\nHost: {target_ip}\r\n\r\n" #GET / HTTP/1.1\r\nHost: {target_ip}\r\n\r\n Hello, {target_ip}!
+            ack_packet = IP(dst=target_ip) / TCP(dport=port, sport=packet[TCP].sport, ack=response[TCP].seq + 1, seq=packet[TCP].seq+1, flags="A") / f"Hello, {target_ip}!" #GET / HTTP/1.1\r\nHost: {target_ip}\r\n\r\n Hello, {target_ip}!
             # Enviar el paquete de ACK con payload
             response = sr1(ack_packet, timeout=timeout, verbose=0)
             if response and response.haslayer(TCP) and response.getlayer(TCP).flags == 0x10:

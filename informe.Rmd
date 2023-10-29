@@ -64,7 +64,7 @@ A diferencia del primer Port Scanner, para el segundo Port Scanner lo basamos en
 
 ## 3. Experimentación
 
-### 3.1
+### 3.1 Experimentaciones de traceroute
 
 #### a
 
@@ -93,9 +93,9 @@ $$
 
 Adicionalmente, si ```destination-reached``` vale 0 el paquete no terminó llegando al host destino, en cambio si vale 1 es que sí llegó al destino. 
 
-Por lo cual, nos pareció interesante arrancar el experimento corriendo la implementación de ```traceroute``` desde la misma computadora en dos lugares distintos para ver los resultados que podría arrojar, y en qué se podrían diferenciar. Es por eso, que decidimos correrlo desde la universidad con el WiFi de ALUMNOSUTDT, que nos proporcionó estos resultados para cada una de las cinco universidades elegidas:
+Por lo cual, nos pareció interesante arrancar el experimento corriendo la implementación de ```traceroute``` desde la misma computadora en dos lugares distintos para ver los resultados que podría arrojar, y en qué se podrían diferenciar. Es por eso, que decidimos correrlo desde la universidad con el WiFi de ALUMNOSUTDT, que nos proporcionó estos resultados para cada una de las seis universidades elegidas:
 
-![5 universidades](5universidades.png) *Figura 1: Resultados de traceroute corrido desde la universidad*
+![6 universidades](5universidades.png) *Figura 1: Resultados de traceroute corrido desde la universidad*
 
 Pudimos observar que corriendo desde la universidad, la tasa de excito era bastante alta, pues de las 6 universidades, los paquetes de 5 de ellas pudieron llegar al host destino, que es un 83,3% de éxito. El único paquete que no llegó a su destino fue el de www.utdt.edu, ya que en todos los 45 hops obtuvimos de respuesta '*', es decir, que tuvo un 100% de no respuesta. Eso podría significar que los routers sobre el path no responden al paquete ICMP o también supusimos que la universidad tiene configurada la firewall para no mostrar esa información en particular por medidas de seguridad, ya que es una página web muy frecuentado por toda la comunidad de UTDT.
 
@@ -103,17 +103,21 @@ Asimismo, observamos que gaia.cs.umass.edu por mas que obtuvo la mayor cantidad 
 
 Por el otro lado, lo corrimos también desde la casa de Micaela para ver que resultados nos podría arrojar:
 
-![5 universidades Micaela](5universidades_mica.png) *Figura 2: Resultados de traceroute corrido desde la casa de Micaela*
+![6 universidades Micaela](5universidades_mica.png) *Figura 2: Resultados de traceroute corrido desde la casa de Micaela*
 
 En la *Figura 2* podemos ver que los resultados son bastante distintos a los de la *Figura 1*. Una de las razones, es que ninguno de los paquetes llegó a su host destino, tal que hubo 0% de éxito. Aunque, mirando un poco más el path que hace cada uno de los paquetes, vimos que los paquetes en un cierto punto muestran los routers que atravesaron, pero después solamente aparecen los "*". Lo que nos lleva a especular, que los host intermedios y de destino no se quieren comunicar con el host de Micaela por correrlo desde un WiFi personal, en comparación con uno institucional, ya que por ahí no lo ven como un host de origen confiable. 
 
-Asimismo, decidimos comparar ambos casos con el tracert de Windows para ver que resultados arroja. Para esto mostraremos que sucedió con las páginas de GAIA y UTDT:
+Asimismo, decidimos comparar ambos casos con el tracert de Windows para ver que resultados arroja. Para esto mostraremos que sucedió con las páginas de GAIA:
 
 ![traceroute desde campus de GAIA](traceroute_univ_gaia.png) *Figura 3: Resultados de traceroute y de tracert de GAIA corrido desde la universidad*
 
-El tracert de Windows utiliza un TTL máximo de tamaño 30, por lo cual al llegar a 30 termina el trace. Sin emmbargo, los caminos que hace son idénticos, con la única excepción que el tracert además muestra los nombres de los routers, como por ejemplo el de ae25.baires1.bai.seabone.net
+El tracert de Windows utiliza un TTL máximo de tamaño 30, por lo cual al llegar a 30 termina el trace. Sin embargo, los caminos que hace son idénticos, con la única excepción que el tracert además muestra los nombres de los routers, como por ejemplo el de ae25.baires1.bai.seabone.net, que puede pertenecer al sistema de cableado que pasa bajo el oceano referenciando al que se encuentra en Buenos Aires, ya que Seabonne es una de las empresas que se encarga de eso. Lo explicaremos en el siguiente punto en más detalle qué podrían significar los saltos en el tiempo que puede tardar en devolver una respuesta.
 
+![traceroute desde la casa de Micaela de GAIA](traceroute_mica_gaia.png) *Figura 4: Resultados de traceroute y de tracert de GAIA corrido desde la casa de Micaela*
 
+Podemos observar que los hops 1, 7 y 8 otra vez son idénticos en este caso (vale aclarar que no siempre pueden llegar a ser idénticos como en estos casos, ya que en cualquier momento uno de los routers puede llegar a decidir a tomar otro camino, por ejemplo, debido a la congestión), por lo cual nosotros asumimos que el hecho de que nuestra implementación de ```traceroute``` haya tenido tantos "*" después del hop 8, es que los host intermedios y de destino no nos quieren proporcionar la información por seguridad y es por eso que no obtenemos una respuesta de si llegó el paquete o no al host destino de la universidad.
+
+Este patrón lo pudimos observar en todos lo paquetes que mandamos desde la computadora y casa de Micaela, lo que no sucedía en la universidad, donde sí llegaban los paquetes mandados a los host destino, donde UTDT era una excepción.
 
 
 #### b
@@ -130,11 +134,69 @@ Para el traceroute a la Universidad de San Pablo, el salto mas largo  (numero 16
 
 Para el traceroute  de Universidad Torcuato di Tella no se obtuvieron respuestas de ningún host intermedio a lo largo de la ruta hacia el host destino. Esto podría deberse a configuraciones de red que bloquean o no responden a las solicitudes de traceroute, medidas de seguridad para proteger la infraestructura de red o a la inaccesibilidad de la ruta desde la ubicación donde se realizó el traceroute.
 
-### 3.2
+### 3.2 Experimentaciones de los port scan (SYN scan y Connect scan)
 
 #### a
 
-[Presenta los resultados y análisis de los experimentos relacionados con el Port Scanner, incluyendo un análisis estadístico sobre el porcentaje de puertos abiertos, cerrados y filtrados en servidores de diferentes universidades.]
+Realizar un análisis estadístico sobre el porcentaje de puertos cerrados, abiertos y filtrados. Para realizar el análisis sugerimos graficar e intentar explicar los resultados obtenidos
+
+Para este experimento de los port scanners, decidimos utilizar las mismas 6 universidades de los 5 continentes.
+
+Para cada una de las universidades elegidas ejecutamos el ```port_scanner -h``` o SYN scan y ```port_scanner -f``` o Connect scan con sus respectivas URLs, tal que nos muestre los puertos abiertos de cada universidad para cada scan. Comenzando con el SYN scan, nuestra implementacion devuelve la cantidad total de puertos abiertos, cantidad de puertos filtrados (asumimos que cualquier puerto que no sea abierto es filtrado) y todos los estados de los puertos, de tal modo podríamos calcular el ```open-percentage``` o el porcentaje de puertos abiertos y el ```filtered-percentage``` o el porcenetaje de puertos filtrados. Con los estados de los puertos armamos los archivos de texto solicitados.
+
+Por lo cuál, para calcular el porcentaje de ```open-percentage```, considerando que hicimos el scan a los 1000 primero puertos:
+
+$$
+\% \; open-percentage \; = \frac{\# puertos \; abiertos}{\# puertos \; totales} =  \frac{\# puertos \; abiertos}{1000}
+$$
+
+Asimismo, para calcular el porcentaje de  ```filtered-percentage```, considerando que hicimos el scan a los 1000 primeros puertos:
+
+$$
+\% \; open-percentage \; = \frac{\# puertos \; filtrados}{\# puertos \; totales} =  \frac{\# puertos \; filtrados}{1000}
+$$
+
+Al haber puesto distintos puertos de origen para ambos port scanners, donde el de SYN scan por default era de 20 y el de Connect scan le pusimos 2002, los corriamos a la vez para ver en qué se podrían llegar a diferenciar o ser similares. Asimismo, nos pareció interesante ver que sucedía si corríamos ambos port scanner desde cada una de nuestras casas y desde la universidad. 
+
+
+Comenzando con el SYN scan, obtuvimos estos resultados para cada una de las seis universidades elegidas:
+
+![porcentaje puertos abiertos de SYN port scan](perc_puertos_abiertos_syn.png) *Figura 5: Resultados de SYN port scan de las seis universidades corrido desde la casa de Victor, Micaela, Exequiel y desde la universidad* 
+
+Lo que observamos fue que con GAIA, Victor obtuvo la mayor cantidad de puertos abiertos, donde obtuvo que habían 8 puertos distintos que estaban abiertos de ellos: $[21,22,80,443,662,892,993,995]$. Considerando que:
+- Port 21: tcp/udp
+- Port 22: tcp/udp
+- Port 80: HTTP
+- Port 443: HTTP
+- Port 662: tcp/udp
+- Port 892: tcp/udp
+- Port 993: tcp/udp
+- Port 995: tcp/udp
+
+- FIGURA 6
+
+Lo que nos provocó bastante curiosidad ver todos esos puertos abiertos, ya que en comparación Micaela obtuvo 3, Exequiel 2 y correrlo desde la universidad 5. Por lo cual, decidimos ver cómo se comparaba con los resultados de Nmap, ya que es una herramienta ampliamente utilizada para escaneo de redes y para evaluar la seguridad de sistemas informáticos, una de las características claves que tiene es el escaneo de puertos. Por lo cual, para ver los primeros 1000 puertos de un SYN scan usamos el comando ```nmap -sS -p 1-1000 gaia.cs.umass.edu```, ya que si no especificamos el rango de los puertos, por default escanea los puertos que Nmap considera los mas importantes. Por lo cuál, arrojó este resultado:
+
+![Nmap scan Victor GAIA](nmap_gaia_viti.png) *Figura 7: Resultados de Nmap SYN port scan de GAIA corrido por Victor* 
+
+Es decir, que para GAIA Victor obtuvo todos los puertos que al mandar un SYN obtuvo un SYN-ACK, obteniento un $100\%$ de éxito. En cambio, Micaela obtuvo un $37.5\%$, Exequiel un $12.5\%$ y desde la Universidad un $62.5\%$. Nosotros suponemos que la diferencia en la cantidad de puertos que cada uno obtuvo, se puede deber a los ISP o las bandas defrecuencia que cada uno tiene, ya que Victor usa IPLAN, Micaela Fibertel de $5.8$ GHz, Exequiel Fibertel de $2.4$ GHz y la Universidad utiliza servicio de una red diseñada especialmente para establecimientos para soportar la gran cantidad de tráfico que necesita, como lo hacen las empresas, ya que pueden todos tener distintos permisos a la hora de hacer este tipo de pédidos. También podría llegar a ser por dónde nos encontramos en Buenos Aires, ya que Victor es el único que se encuentra en Recoleta, mientras que el resto se ubican en Belgrano. También podría ser por los permisos que tenemos en nuestras computadoras, ya que Victor lo corrió desde una Mac y el resto desde Windows, ya que daba el mismo resultado que en Ubuntu.
+
+Además, nos llamó la atención de que al correrlo desde la universidad todos menos UTDT nos devolvieron que los 5 puertos abiertos que tenían eran: $[25,80,110,143,443]$. 
+
+
+
+
+
+- No alcanzaban 1%
+- 
+
+
+
+Además, para el caso de Connect scan, queríamos ver qué sucedía si el payload era un mensaje de ```Hello, {target_ip}!``` o si es un GET de HTTP ```GET / HTTP/1.1\r\n Host: {host_destino}\r\n\r\n```, si cambiaban los puertos que se encontraban abiertos.
+
+
+
+
 
 #### b
 
